@@ -34,7 +34,7 @@ public class DatabaseEngine {
 			br = new BufferedReader(isr);
 			String sCurrentLine;
 			
-			while (result != null && (sCurrentLine = br.readLine()) != null) {
+			while (result == null && (sCurrentLine = br.readLine()) != null) {
 				String[] parts = sCurrentLine.split(":");
 				if (text.toLowerCase().equals(parts[0].toLowerCase())) {
 					result = parts[1];
@@ -44,10 +44,9 @@ public class DatabaseEngine {
 			log.info("IOException while reading file: {}", e.toString());
 		} finally {
 			try {
-				if (br != null)
-					br.close();
-				if (isr != null)
-					isr.close();
+				if ((br != null) || (isr != null))
+				{	br.close();
+					isr.close();}
 			} catch (IOException ex) {
 				log.info("IOException while closing file: {}", ex.toString());
 			}
